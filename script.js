@@ -10,7 +10,7 @@ const metrics = [
 
 const titles = [
     "Desired language to work with next year",
-    "Language worked with",
+    "Languages worked with",
     "Desired technologies to work with next year",
     "Technologies worked with",
     "Desired web frameworks to work with next year",
@@ -18,18 +18,15 @@ const titles = [
     "Type of Developer",
 ];
 
-const makeChart = (data) => {
-    const metric = document.getElementById("surveyMetrics");
-    const dataCol = data.map((d) => d[metric.value]);
-    const dataCount = cleanData(dataCol);
+const makeChart = (data, title) => {
     var chart = new Chart("mainChart", {
         type: "horizontalBar",
         data: {
-            labels: Object.keys(dataCount),
+            labels: Object.keys(data),
             datasets: [
                 {
-                    data: Object.values(dataCount),
-                    backgroundColor: Object.keys(dataCount).map((d) =>
+                    data: Object.values(data),
+                    backgroundColor: Object.keys(data).map((d) =>
                         getRandomColor()
                     ),
                 },
@@ -38,7 +35,7 @@ const makeChart = (data) => {
         options: {
             title: {
                 display: true,
-                text: "Stack Overflow Survey Aggregator",
+                text: title,
             },
             legend: {
                 display: false,
@@ -109,24 +106,11 @@ const createSelectTag = () => {
 const updateChartData = (selectTag) => {
     const metric = selectTag.value;
     const data = cleanData(ds.map((d) => d[metric]));
+    const title = titles[metrics.indexOf(metric)];
 
-    removeChartData(chart);
-    addChartData(chart, Object.keys(data), Object.values(data));
-};
+    chart.destroy();
 
-// TODO: Data not showing up???
-const removeChartData = (chart) => {
-    chart.data.labels = [];
-    chart.data.datasets.pop();
-
-    chart.update();
-};
-
-const addChartData = (chart, label, data) => {
-    chart.data.labels = label;
-    chart.data.datasets.push(data);
-
-    chart.update();
+    chart = makeChart(data, title);
 };
 
 var ds;
@@ -134,5 +118,9 @@ var chart;
 
 d3.csv("survey_results_public.csv").then((data) => {
     ds = data;
-    chart = makeChart(ds);
+
+    const metric = document.getElementById("surveyMetrics");
+    const dataCol = data.map((d) => d[metric.value]);
+    const dataCount = cleanData(dataCol);
+    chart = makeChart(dataCount, "Stack Overflow Aggregator");
 });
