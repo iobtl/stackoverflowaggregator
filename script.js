@@ -110,7 +110,9 @@ const updateChartData = (metric) => {
 // Initialize list of countries from dataset
 const addCountries = (data) => {
     var countries = new Set(data.map((d) => d["Country"]));
-    countries = new Set([...countries].sort());
+    countries = new Set(
+        [...countries].sort().filter((country) => country !== "NA")
+    );
 
     const countrySelectTag = document.getElementById("countryFilter");
 
