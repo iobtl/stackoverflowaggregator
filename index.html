@@ -7,28 +7,42 @@
         <link href="style.css" rel="stylesheet" type="text/css" />
     </head>
     <body>
+        <h1>Stack Overflow Aggregator</h1>
         <canvas id="mainChart" width="960" height="720"></canvas>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.16.0/d3.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
         <script src="script.js"></script>
 
-        <label for="metrics">Choose a metric:</label>
-        <select
-            name="metric"
-            id="surveyMetrics"
-            onchange="updateChartData(this)"
-        >
-            <option value="LanguageDesireNextYear">Desired Languages</option>
-            <option value="LanguageWorkedWith">Languages Worked With</option>
-            <option value="MiscTechDesireNextYear">Desired Technologies</option>
-            <option value="MiscTechWorkedWith">Technologies Worked With</option>
-            <option value="WebframeDesireNextYear"
-                >Desired Web Framework</option
+        <div class="options">
+            <label for="metrics">Metric: </label>
+            <select
+                name="metric"
+                id="surveyMetrics"
+                onchange="updateChartData(this)"
             >
-            <option value="WebframeWorkedWith"
-                >Web Framework Worked With</option
-            >
-            <option value="DevType">Type of Developer</option>
-        </select>
+                <option value="LanguageDesireNextYear"
+                    >Desired Languages</option
+                >
+                <option value="LanguageWorkedWith"
+                    >Languages Worked With</option
+                >
+                <option value="MiscTechDesireNextYear"
+                    >Desired Technologies</option
+                >
+                <option value="MiscTechWorkedWith"
+                    >Technologies Worked With</option
+                >
+                <option value="WebframeDesireNextYear"
+                    >Desired Web Framework</option
+                >
+                <option value="WebframeWorkedWith"
+                    >Web Framework Worked With</option
+                >
+                <option value="DevType">Type of Developer</option>
+            </select>
+
+            <label for="country">Country: </label>
+            <select name="country" id="countryFilter"> </select>
+        </div>
     </body>
 </html>

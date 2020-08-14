@@ -1,7 +1,21 @@
-canvas,
-select {
+canvas {
     padding-left: 0;
     padding-right: 0;
     margin: auto;
     display: block;
+}
+
+h1 {
+    text-align: center;
+}
+
+.options {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
+
+label {
+    padding-left: 1em;
+    padding-right: 1em;
 }

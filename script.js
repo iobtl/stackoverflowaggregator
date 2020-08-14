@@ -36,6 +36,8 @@ const makeChart = (data, title) => {
             title: {
                 display: true,
                 text: title,
+                fontSize: 16,
+                fontFamily: "Helvetica Neue",
             },
             legend: {
                 display: false,
@@ -119,8 +121,9 @@ var chart;
 d3.csv("survey_results_public.csv").then((data) => {
     ds = data;
 
-    const metric = document.getElementById("surveyMetrics");
-    const dataCol = data.map((d) => d[metric.value]);
+    const metric = document.getElementById("surveyMetrics").value;
+    const dataCol = data.map((d) => d[metric]);
     const dataCount = cleanData(dataCol);
-    chart = makeChart(dataCount, "Stack Overflow Aggregator");
+    const title = titles[metrics.indexOf(metric)];
+    chart = makeChart(dataCount, title);
 });
