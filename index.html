@@ -18,7 +18,7 @@
             <select
                 name="metric"
                 id="surveyMetrics"
-                onchange="updateChartData(this)"
+                onchange="updateChartData(this.value)"
             >
                 <option value="LanguageDesireNextYear"
                     >Desired Languages</option
@@ -42,7 +42,13 @@
             </select>
 
             <label for="country">Country: </label>
-            <select name="country" id="countryFilter"> </select>
+            <select
+                name="country"
+                id="countryFilter"
+                onchange="updateCountryFilter(this.value)"
+            >
+                <option value="" disabled selected>Select a country</option>
+            </select>
         </div>
     </body>
 </html>

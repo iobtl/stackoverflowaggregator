@@ -42,6 +42,15 @@ const makeChart = (data, title) => {
             legend: {
                 display: false,
             },
+            scales: {
+                xAxes: [
+                    {
+                        ticks: {
+                            beginAtZero: true,
+                        },
+                    },
+                ],
+            },
             responsive: false,
         },
     });
@@ -81,38 +90,50 @@ const cleanData = (data) => {
     return sortedCount;
 };
 
-const createLabelTag = () => {
-    const labelTag = document.createElement("label");
-    const labelContent = document.createTextNode("Choose a metric:");
-    labelTag.appendChild(labelContent);
+// Function for performing chart updates with corresponding data to prompt a change in the view
+const updateChartData = (metric) => {
+    var data;
+    const country = document.getElementById("countryFilter").value;
 
-    return labelTag;
-};
-
-const createSelectTag = () => {
-    const selectTag = document.createElement("select");
-    selectTag.name = "metric";
-    selectTag.id = "surveyMetrics";
-
-    for (var i = 0; i < metrics.length; ++i) {
-        const option = document.createElement("option");
-        option.value = metrics[i];
-        option.text = metrics[i];
-        selectTag.appendChild(option);
+    if (country !== "") {
+        data = ds.filter((d) => d["Country"] == country);
     }
 
-    return selectTag;
-};
-
-// Function for performing chart updates with corresponding data to prompt a change in the view
-const updateChartData = (selectTag) => {
-    const metric = selectTag.value;
-    const data = cleanData(ds.map((d) => d[metric]));
+    data = cleanData(data.map((d) => d[metric]));
     const title = titles[metrics.indexOf(metric)];
 
     chart.destroy();
 
     chart = makeChart(data, title);
+};
+
+// Initialize list of countries from dataset
+const addCountries = (data) => {
+    var countries = new Set(data.map((d) => d["Country"]));
+    countries = new Set([...countries].sort());
+
+    const countrySelectTag = document.getElementById("countryFilter");
+
+    countries.forEach((country) => {
+        const option = document.createElement("option");
+        option.value = country;
+        option.text = country;
+
+        countrySelectTag.appendChild(option);
+    });
+};
+
+const updateCountryFilter = (country) => {
+    const metric = document.getElementById("surveyMetrics").value;
+    const title = titles[metrics.indexOf(metric)];
+    const newData = ds
+        .filter((d) => d["Country"] == country)
+        .map((d) => d[metric]);
+    const newDataCount = cleanData(newData);
+
+    chart.destroy();
+
+    chart = makeChart(newDataCount, title);
 };
 
 var ds;
@@ -121,9 +142,14 @@ var chart;
 d3.csv("survey_results_public.csv").then((data) => {
     ds = data;
 
+    // Initializing chart with desired languages metric each reboot
+    // IDEA: progress bar??
     const metric = document.getElementById("surveyMetrics").value;
     const dataCol = data.map((d) => d[metric]);
     const dataCount = cleanData(dataCol);
     const title = titles[metrics.indexOf(metric)];
+
     chart = makeChart(dataCount, title);
+
+    addCountries(data);
 });
