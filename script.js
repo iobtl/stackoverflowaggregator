@@ -1,3 +1,23 @@
+const metrics = [
+    "LanguageDesireNextYear",
+    "LanguageWorkedWith",
+    "MiscTechDesireNextYear",
+    "MiscTechWorkedWith",
+    "WebframeDesireNextYear",
+    "WebframeWorkedWith",
+    "DevType",
+];
+
+const titles = [
+    "Desired language to work with next year",
+    "Language worked with",
+    "Desired technologies to work with next year",
+    "Technologies worked with",
+    "Desired web frameworks to work with next year",
+    "Web frameworks worked with",
+    "Type of Developer",
+];
+
 const makeChart = (data) => {
     const metric = document.getElementById("surveyMetrics");
     const dataCol = data.map((d) => d[metric.value]);
@@ -23,8 +43,11 @@ const makeChart = (data) => {
             legend: {
                 display: false,
             },
+            responsive: false,
         },
     });
+
+    return chart;
 };
 
 const getRandomColor = () => {
@@ -59,4 +82,57 @@ const cleanData = (data) => {
     return sortedCount;
 };
 
-ds = d3.csv("survey_results_public.csv").then(makeChart);
+const createLabelTag = () => {
+    const labelTag = document.createElement("label");
+    const labelContent = document.createTextNode("Choose a metric:");
+    labelTag.appendChild(labelContent);
+
+    return labelTag;
+};
+
+const createSelectTag = () => {
+    const selectTag = document.createElement("select");
+    selectTag.name = "metric";
+    selectTag.id = "surveyMetrics";
+
+    for (var i = 0; i < metrics.length; ++i) {
+        const option = document.createElement("option");
+        option.value = metrics[i];
+        option.text = metrics[i];
+        selectTag.appendChild(option);
+    }
+
+    return selectTag;
+};
+
+// Function for performing chart updates with corresponding data to prompt a change in the view
+const updateChartData = (selectTag) => {
+    const metric = selectTag.value;
+    const data = cleanData(ds.map((d) => d[metric]));
+
+    removeChartData(chart);
+    addChartData(chart, Object.keys(data), Object.values(data));
+};
+
+// TODO: Data not showing up???
+const removeChartData = (chart) => {
+    chart.data.labels = [];
+    chart.data.datasets.pop();
+
+    chart.update();
+};
+
+const addChartData = (chart, label, data) => {
+    chart.data.labels = label;
+    chart.data.datasets.push(data);
+
+    chart.update();
+};
+
+var ds;
+var chart;
+
+d3.csv("survey_results_public.csv").then((data) => {
+    ds = data;
+    chart = makeChart(ds);
+});
