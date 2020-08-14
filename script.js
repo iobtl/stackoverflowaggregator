@@ -1,5 +1,6 @@
 const makeChart = (data) => {
-    const dataCol = data.map((d) => d.LanguageWorkedWith);
+    const metric = document.getElementById("surveyMetrics");
+    const dataCol = data.map((d) => d[metric.value]);
     const dataCount = cleanData(dataCol);
     var chart = new Chart("mainChart", {
         type: "horizontalBar",
@@ -15,7 +16,10 @@ const makeChart = (data) => {
             ],
         },
         options: {
-            title: "Desired languages to learn",
+            title: {
+                display: true,
+                text: "Stack Overflow Survey Aggregator",
+            },
             legend: {
                 display: false,
             },
