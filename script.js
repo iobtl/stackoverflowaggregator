@@ -72,9 +72,9 @@ const cleanData = (data) => {
     data = data.flatMap((entry) => entry.split(";")).filter((d) => d != "NA");
 
     const dataCount = new Object();
-  data.forEach(d => {
-    dataCount[d] = (dataCount[d] || 0) + 1;
-  });
+    data.forEach(d => {
+      dataCount[d] = (dataCount[d] || 0) + 1;
+    });
 
     const sortedCount = {};
     Object.entries(dataCount)
