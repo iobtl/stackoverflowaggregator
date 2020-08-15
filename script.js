@@ -72,13 +72,9 @@ const cleanData = (data) => {
     data = data.flatMap((entry) => entry.split(";")).filter((d) => d != "NA");
 
     const dataCount = new Object();
-    data.forEach((d) => {
-        if (!Object.keys(dataCount).includes(d)) {
-            dataCount[d] = 1;
-        } else {
-            dataCount[d] += 1;
-        }
-    });
+  data.forEach(d => {
+    dataCount[d] = (dataCount[d] || 0) + 1;
+  });
 
     const sortedCount = {};
     Object.entries(dataCount)
@@ -125,6 +121,7 @@ const addCountries = (data) => {
     });
 };
 
+// TODO: Add 'global' option
 const updateCountryFilter = (country) => {
     const metric = document.getElementById("surveyMetrics").value;
     const title = titles[metrics.indexOf(metric)];
