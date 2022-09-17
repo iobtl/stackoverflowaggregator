@@ -2,7 +2,7 @@
 
 ## Overview
 
-This project represents a simple template for performing basic data wrangling and visualization using data obtained from the [Stack Overflow Developer Survey (2020 Edition)](https://insights.stackoverflow.com/survey/2020). The datasets (.csv format) can be found [here](https://insights.stackoverflow.com/survey/).
+This project represents a simple template for performing basic data wrangling and visualization using data obtained from the Stack Overflow Developer Survey. The datasets (.csv format) can be found [here](https://insights.stackoverflow.com/survey/). To run the visualization, download the datasets from the aforementioned site and append `${YEAR}` to their filenames. For example, the latest dataset would be named `survey_results_public_2022.csv`.
 
 ## Motivation
 
