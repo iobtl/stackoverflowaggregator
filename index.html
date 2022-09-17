@@ -20,25 +20,6 @@
                 id="surveyMetrics"
                 onchange="updateChartData(this.value)"
             >
-                <option value="LanguageDesireNextYear"
-                    >Desired Languages</option
-                >
-                <option value="LanguageWorkedWith"
-                    >Languages Worked With</option
-                >
-                <option value="MiscTechDesireNextYear"
-                    >Desired Technologies</option
-                >
-                <option value="MiscTechWorkedWith"
-                    >Technologies Worked With</option
-                >
-                <option value="WebframeDesireNextYear"
-                    >Desired Web Framework</option
-                >
-                <option value="WebframeWorkedWith"
-                    >Web Framework Worked With</option
-                >
-                <option value="DevType">Type of Developer</option>
             </select>
 
             <label for="country">Country: </label>
@@ -52,6 +33,13 @@
             <button id="clearFilter" onclick="clearCountryFilter()">
                 Clear
             </button>
+            <label for="year">Year: </label>
+            <select
+                name="year"
+                id="yearFilter"
+                onchange="updateYearData(this.value)"
+            >
+            </select>
         </div>
     </body>
 </html>
