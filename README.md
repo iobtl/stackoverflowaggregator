@@ -10,6 +10,16 @@ One main reason for wanting to create this template was due in fact to the omiss
 
 _NB_: Since I was mainly interested in only a few metrics, this does not cover every metric recorded by the original survey (although implementing the rest is fairly trivial).
 
+## Build
+
+Python's `http.server` is used for convenience in serving the site locally. Assuming `python` is installed, simply run:
+
+```bash
+python -m http.server
+```
+
+Then visit `localhost:8000` to view the chart.
+
 ## Technologies
 
 -   Vanilla Javascript
